@@ -10,17 +10,18 @@ import java.sql.SQLException;
 public class RegistroDAO {
         
     public void cadastrarAbrigo(Abrigo abrigo) {
-        String sql = "INSERT INTO ABRIGO (NOME, ENDERECO, CONTATO, CAPACIDADE_MAX, TX_DE_OCUPACAO)VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO ABRIGO (NOME, ENDERECO, CONTATO, CNPJ, CAPACIDADE_MAX, TX_DE_OCUPACAO)VALUES (?,?,?,?,?,?)";
         
         PreparedStatement ps = null;
         
         try { 
-            ps.conexao.getConexao().preparedstatement(sql);
+            ps = conexao.getConexao().prepareStatement(sql);
             ps.setString(1,abrigo.getNome());
             ps.setString(2,abrigo.getEndereco());
             ps.setString(3,abrigo.getContato());
-            ps.setInt(4,abrigo.getCapacidade_max());
-            ps.setDouble(5,abrigo.getTx_de_Ocupacao());
+            ps.setInt(4,abrigo.getCapacidadeMax());
+            ps.setString(5,abrigo.getCNPJ());
+            ps.setDouble(6,abrigo.getTx_Ocupacao());
             
             ps.execute();
             ps.close();
