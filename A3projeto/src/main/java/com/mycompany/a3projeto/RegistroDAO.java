@@ -30,5 +30,27 @@ public class RegistroDAO {
         }
     
     }
+        public void cadastrarPessoa(Pessoa pessoa) {
+        String sql = "INSERT INTO ABRIGO (NOME, IDADE, CONTATO, CPF, GÊNERO, NECESSIDADES_ESPECIAIS,ABRIGO_ID)VALUES (?,?,?,?,?,?,?)";
+        
+        PreparedStatement ps = null;
+        
+        try { 
+            ps = conexao.getConexao().prepareStatement(sql);
+            ps.setString(1,pessoa.getNome());
+            ps.setInt(2,pessoa.getIdade());
+            ps.setString(3,pessoa.getTelefone());
+            ps.setString(4,pessoa.getCPF());
+            ps.setString(5,pessoa.getGenero());
+            ps.setString(6,pessoa.getNecessidadesEspeciais());
+            ps.setInt(7,pessoa.getCodigo());
+            
+            ps.execute();
+            ps.close();
+        } catch (SQLException e) { 
+            e.printStackTrace ();
+        }
+    
+    }
     
 }
