@@ -14,7 +14,6 @@ package com.mycompany.a3projeto;
     private String CPF;
     private int idade;
     private String telefone;
-    private String endereco;
     private String genero; 
     private String necessidadesEspeciais;
 
