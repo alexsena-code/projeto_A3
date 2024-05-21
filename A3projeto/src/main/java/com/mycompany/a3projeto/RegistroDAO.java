@@ -10,12 +10,15 @@ import java.sql.SQLException;
 public class RegistroDAO {
         
     public void cadastrarAbrigo(Abrigo abrigo) {
-        String sql = "INSERT INTO ABRIGO (NOME, ENDERECO, CONTATO, CNPJ, CAPACIDADE_MAX, TX_DE_OCUPACAO)VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO ABRIGOS (NOME, ENDERECO, CONTATO, CNPJ, CAPACIDADE_MAX, TX_DE_OCUPACAO)VALUES (?,?,?,?,?,?)";
         
         PreparedStatement ps = null;
         
         try { 
+            
+            // Criação do prepareStatement, para execeutar uma query
             ps = conexao.getConexao().prepareStatement(sql);
+           //Adicionar os valores que são esperados pela query
             ps.setString(1,abrigo.getNome());
             ps.setString(2,abrigo.getEndereco());
             ps.setString(3,abrigo.getContato());
@@ -23,7 +26,9 @@ public class RegistroDAO {
             ps.setString(5,abrigo.getCNPJ());
             ps.setDouble(6,abrigo.getTx_Ocupacao());
             
+            //Executar a query
             ps.execute();
+            //Fechar a query
             ps.close();
         } catch (SQLException e) { 
             e.printStackTrace ();
@@ -31,7 +36,7 @@ public class RegistroDAO {
     
     }
         public void cadastrarPessoa(Pessoa pessoa) {
-        String sql = "INSERT INTO ABRIGO (NOME, IDADE, CONTATO, CPF, GÊNERO, NECESSIDADES_ESPECIAIS,ABRIGO_ID)VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO PESSOAS (NOME, IDADE, TELEFONE, CPF, GENERO, NECESSIDADESESPECIAIS)VALUES (?,?,?,?,?,?)";
         
         PreparedStatement ps = null;
         
@@ -43,7 +48,7 @@ public class RegistroDAO {
             ps.setString(4,pessoa.getCPF());
             ps.setString(5,pessoa.getGenero());
             ps.setString(6,pessoa.getNecessidadesEspeciais());
-            ps.setInt(7,pessoa.getCodigo());
+            
             
             ps.execute();
             ps.close();
