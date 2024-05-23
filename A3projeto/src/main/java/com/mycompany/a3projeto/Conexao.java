@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Conexao {
         // Criação de Variáveis usadas para conexão do Banco de Dados // 
-    private static final String url = "jdbc:mysql://localhost:3306/a3database";
+    private static final String url = "jdbc:mysql://localhost:3306/a3db";
     private static final String user = "admin";
     private static final String password = "1234";
         
