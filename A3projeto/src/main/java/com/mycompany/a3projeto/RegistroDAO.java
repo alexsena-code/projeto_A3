@@ -1,4 +1,5 @@
 package com.mycompany.a3projeto;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,32 +8,44 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class RegistroDAO {
-        
-    public void cadastrarAbrigo(Abrigo abrigo) {
-        String sql = "INSERT INTO ABRIGOS (CODABRIGO,NOME, ENDERECO, CONTATO, CNPJ)VALUES (?,?,?,?,?)";
-        
+
+    public void cadastrarAbrigo(Abrigo abrigo) throws MensagemDeErroCustomizada {
+        //String para armazenar comando SQL que vai tá dando INSERT(Inserindo) nos atributos da tabela no banco de dados mysql
+        String sql = "INSERT INTO ABRIGOS (CODABRIGO, NOME, ENDERECO, CONTATO, CNPJ) VALUES (?,?,?,?,?)";
         PreparedStatement ps = null;
-        
-        try { 
-            
-            // Criação do prepareStatement, para execeutar uma query
-            ps = Conexao.getConexao().prepareStatement(sql);
-           //Adicionar os valores que são esperados pela query
-            ps.setInt(1,abrigo.getCodAbrigo());
-            ps.setString(2,abrigo.getNome());
-            ps.setString(3,abrigo.getEndereco());
-            ps.setString(4,abrigo.getContato());
-            ps.setString(5,abrigo.getCNPJ());
-            
-            //Executar a query
+
+        try {
+            // Criação do prepareStatement, para executar uma query
+            Connection conn = Conexao.getConexao();
+            ps = conn.prepareStatement(sql);
+            // Adicionar os valores que são esperados pela query
+            ps.setInt(1, abrigo.getCodAbrigo());
+            ps.setString(2, abrigo.getNome());
+            ps.setString(3, abrigo.getEndereco());
+            ps.setString(4, abrigo.getContato());
+            ps.setString(5, abrigo.getCNPJ());
+            // Executar a query
             ps.execute();
-        } catch (SQLException e) { 
-            e.printStackTrace ();
+        } catch (SQLException e) {
+            //Tratar a mensagem de erro caso o CNPJ já esteja cadastrado, já q o banco de dados só está aceitando um CNPJ por table, coloquei como valor UNIQUE
+            if (e instanceof java.sql.SQLIntegrityConstraintViolationException) {
+                throw new MensagemDeErroCustomizada("Erro - O CNPJ: " + abrigo.getCNPJ() + " ja esta cadastrado no sistema.");
+            } else {
+                throw new MensagemDeErroCustomizada("Erro ao cadastrar o abrigo: " + e.getMessage());
+            }
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     
     }
     public List<Abrigo> getAbrigos (){
-        
+        // String para armzenar comando SQL que vai selecionar a table ABRIGOS para
         String sql = "SELECT * FROM abrigos";
         
         List<Abrigo> abrigos = new ArrayList<>();
@@ -63,14 +76,12 @@ public class RegistroDAO {
                 
                     //Recuperar o CNPJ
                 abrigo.setCNPJ(rset.getString("CNPJ"));
-                    //Recuperar a Capacidade máxima
-                
+                    
+                    // adicionar os valores recuperados em abrigo
                 abrigos.add(abrigo);
                 }
-                
-               
-                
 
+                //Tratamento de erro
             }catch (Exception e) {
                 e.printStackTrace();
             }finally {
@@ -110,5 +121,10 @@ public class RegistroDAO {
         }
     
     }
+        public class MensagemDeErroCustomizada extends Exception {
+            public MensagemDeErroCustomizada(String mensagemDeErro) {
+        super(mensagemDeErro);
+    }
+}
     
 }
