@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class conexao {
+public class Conexao {
         // Criação de Variáveis usadas para conexão do Banco de Dados // 
     private static final String url = "jdbc:mysql://localhost:3306/a3db";
     private static final String user = "admin";
