@@ -3,7 +3,7 @@ package com.mycompany.a3projeto;
 
 /* Metodo construtor do objeto Abrigo, reccbendo como atributos nome, endereço, contato, CNPJ, CapcidadeMax,taxaDeoOcupação !*/
 public class Abrigo {
-        private int codigo;
+        private int codAbrigo;
         private String nome;
         private String endereco;
         private String contato;
@@ -14,13 +14,6 @@ public class Abrigo {
         
         //Geters e Setters//
 
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
 
     public String getNome() {
         return nome;
@@ -68,6 +61,14 @@ public class Abrigo {
 
     public void setTx_Ocupacao(Double tx_Ocupacao) {
         this.tx_Ocupacao = tx_Ocupacao;
+    }
+
+    public int getCodAbrigo() {
+        return codAbrigo;
+    }
+
+    public void setCodAbrigo(int codAbrigo) {
+        this.codAbrigo = codAbrigo;
     }
  
     }
