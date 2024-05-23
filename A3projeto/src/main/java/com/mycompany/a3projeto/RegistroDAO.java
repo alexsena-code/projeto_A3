@@ -45,7 +45,7 @@ public class RegistroDAO {
             try{
                
                 ps = Conexao.getConexao().prepareStatement(sql);
-    
+                //result set
                 rset = ps.executeQuery();
                 
                 while (rset.next()) {                    
