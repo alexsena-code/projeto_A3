@@ -23,6 +23,7 @@ public class Principal{
         switch (opcao) {
         case 1:
             RegistroDAO registroDAO = new RegistroDAO();
+
                 Abrigo abrigo = new Abrigo();
                 abrigo.setNome("Luz Esperança");
                 abrigo.setCNPJ("465214330001932");
